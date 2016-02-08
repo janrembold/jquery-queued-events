@@ -1,0 +1,33 @@
+{
+  "name": "jquery-queued-events",
+  "version": "0.1.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/janrembold/jquery-queued-events.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/janrembold/jquery-queued-events/issues"
+  },
+  "homepage": "https://github.com/janrembold/jquery-queued-events",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.2",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0"
+  },
+  "dependencies": {
+    "gulp-header": "^1.7.1"
+  }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="#" class="test">Click</a>
+<ul class="test2"></ul>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../jquery.queued.events.js"></script>
+<script>
+
+    $('.test2').trigger('change', [ 'before' ]);
+    $('.test2').trigger('change', [ 'before again' ]);
+
+    $('.test').on('click', function(e) {
+        e.preventDefault();
+        console.log('Link was clicked');
+
+        $('.test2').trigger('change', [ 'after' ]);
+    });
+
+    $('.test2').on('change', function(e, log) {
+        $(this).append('<li>'+log+'</li>');
+    });
+
+    $('.test2').trigger('change', [ 'after again' ]);
+
+</script>
+</body>
+</html>
