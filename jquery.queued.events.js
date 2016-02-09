@@ -3,49 +3,39 @@
 (function($) {
     'use strict';
 
-    var triggeredEvents = [];
-    var original = {
-        on: $.fn.on,
-        trigger: $.fn.trigger
-    };
+    var eventQueue = [];
+    var originalOn = $.fn.on;
+    var originalTrigger = $.fn.trigger;
 
     $.fn.extend({
         on: function() {
 
             var args = arguments;
-            var context = original.on.apply(this, args);
+            var context = originalOn.apply(this, args);
 
-            for(var i = 0, eventCount = triggeredEvents.length; i<eventCount; i++) {
-                if( triggeredEvents[i].ctx.get(0) === this.get(0) && $.inArray(triggeredEvents[i].args[0], args[0].split(' ')) > -1 ) {
-                    original.trigger.apply(triggeredEvents[i].ctx, triggeredEvents[i].args);
+            // check queue for existing events
+            for(var i = 0, eventCount = eventQueue.length; i<eventCount; i++) {
+                if( eventQueue[i].ctx.get(0) === this.get(0) && $.inArray(eventQueue[i].args[0], args[0].split(' ')) > -1 ) {
+                    originalTrigger.apply(eventQueue[i].ctx, eventQueue[i].args);
                 }
             }
 
             return context;
-
         },
 
         trigger: function() {
 
             var args = arguments;
-            //var addToQueue = true;
-            //var eventCount = triggeredEvents.length;
-            //
-            //for(var i=0; i<eventCount; i++) {
-            //    if( triggeredEvents[i].ctx.get(0) === this.get(0) && triggeredEvents[i].args === args) {
-            //        addToQueue = false;
-            //        break;
-            //    }
-            //}
+            var events = $._data(this[0], 'events');
 
-            //if( addToQueue ) {
-                triggeredEvents.push({
+            if( !events || !events[ args[0] ] ) {
+                eventQueue.push({
                     ctx: this,
                     args: args
                 });
-            //}
+            }
 
-            return original.trigger.apply(this, args);
+            return originalTrigger.apply(this, args);
         }
     });
 
